@@ -41,84 +41,82 @@ box-sizing: border-box;
   box-sizing: inherit;
 }
 
-img{
-  max-width: 100%;
-  height: auto;
+body {
+font-family: 'Roboto';
+font-style: normal;
+font-size: 20px;
+line-height: 1.2;
+font-weight: normal;
+color: black;
 }
 
-body{
-  font-family: 'Roboto';
-  font-style: normal;
-  font-size: 20px;
-  line-height: 1.2;
-  font-weight: normal;
-  color: #000;
-  height:100%;
-  background: url(../img/b9.jpg) no-repeat center ;
-  z-index: -10;
-  background-size: cover;
-  padding-top: 250px;
+.header {
+background-color: rgb(204, 182, 182);
 }
-
-.wrapper{
-  max-width: 1600px;
-  min-width: 200px;
+.header__wrapper {
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 25px;
-}
-
-
-.header{
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(19, 2, 2, 0.555);
-}
-
-.header__wrapper{
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  padding-top: 0px;
 }
 
-.header__logopic{
-  width: 80px;
-  height: 75px;
-  background-color: rgba(255, 255, 255, 0.493);
+.header__menu {
+background-color: rgb(230, 184, 184);
 }
 
-/* .header__logo{
-  width: 15%;
-  left 20px;
-} */
-
-.header__list{
-  display:flex;
+.header__nav{
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 20px;
+}
+.header__item{ 
+  margin-left: 20px;
+}
+.header__user-menu{
+  background-color: antiquewhite;
+  display: flex;
   flex-wrap: wrap;
 }
-
-.header__item{
-margin-right: 90px;
+.usermenu__nav{
+  list-style-type: none;
+  margin-right: 5px;
+  display: flex;
+  flex-wrap: wrap;
 }
-
-.header__item:last-child{
-  margin-right: 25px;
+.usermenu__item{
+  margin-right: 5px;
 }
-
-.header__link{
-  font-size: 20px;
-  line-height: 23px;
-  color: white;
-  text-decoration: solid;
+.header__avatar{
+  margin-right: 0px;
 }
-
-.header__link:hover,.header__link:focus,.header__link:active{
-opacity: .50;
-}
-
 
 /*Header-styles end */
+
+/*main styles start*/
+.main{
+  display: flex;
+  flex-wrap: wrap;
+}
+.formfield {
+  background-color: bisque;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  max-width: 400px;
+  padding: 10px;
+}
+.form1{
+  display: grid;
+  grid-template-columns: 180px 200px;
+}
+.legend{
+  padding-top: 1px;
+}
+.diagramm__field{
+  min-width: 400px;
+  min-height: 400px;
+}
+/*main styles end*/
