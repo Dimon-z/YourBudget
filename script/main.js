@@ -36,8 +36,6 @@ function showData() {
   const clearItem = '';
 
   dataItem.forEach((data) => {
-    console.log(data);
-    console.log(data.inputCurrency);
     cardItem
   += `
 
@@ -64,12 +62,10 @@ function click(e) {
   inputDate = new Date(inputForm.elements.spentDate.value);
   inputType = inputForm.elements.expence.value;
   addDataObj();
-  console.log(dataColection);
   showData();
 }
 
 function deleteDataObj(e) {
-  console.log(e.target.id)
   let timeStamp = e.target.id;
   dataColection = dataColection.filter((obj) => !(obj.timeStamp == timeStamp));
   showData();
