@@ -1,4 +1,6 @@
+/* import * as d3 from 'd3';
 
+console.log(d3); */
 class DataObj {
   constructor(summa, currency, date, type) {
     this.currency = currency;
@@ -24,6 +26,32 @@ function buildGraph() {
 
 }
 
+function showData() {
+const dataItem = dataColection;
+
+let cardItem = '';
+let clearItem = '';
+
+const objlist = document.getElementById('objlist');
+dataItem.forEach((data) => {
+  console.log(data)
+  console.log(data.inputCurrency)
+  cardItem
+  += `
+
+  <div style="border:2px solid #ccc;width: 300px">
+  <p>${data.type}</p>
+  <p>${data.date} </p>
+  <p>${data.summa }<span> ${data.currency}</span></p>
+  <a href="${data.id}">Перейти</a>
+  </div>
+
+  `;
+});
+objlist.innerHTML = '';
+objlist.insertAdjacentHTML('afterbegin', cardItem)
+}
+
 function click(e) {
   e.preventDefault();
   inputSummma = inputForm.elements.moneyCount.value;
@@ -32,6 +60,7 @@ function click(e) {
   inputType = inputForm.elements.expence.value;
   addDataObj();
   console.log(dataColection);
+  showData()
 }
 
 inputForm.addEventListener('submit', click);
