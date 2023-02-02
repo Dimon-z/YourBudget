@@ -119,4 +119,10 @@ background-color: rgb(230, 184, 184);
   min-width: 400px;
   min-height: 400px;
 }
+.dataobj__list{
+  background-color: aliceblue;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 600px;
+}
 /*main styles end*/

@@ -7,10 +7,11 @@ class DataObj {
     this.date = date;
     this.summa = summa;
     this.type = type;
+    this.timeStamp = Date.now();
   }
 }
 
-const dataColection = [];
+let dataColection = [];
 const inputForm = document.forms.inputForm1;
 let inputSummma;
 let inputCurrency;
@@ -26,30 +27,34 @@ function buildGraph() {
 
 }
 
-function showData() {
-const dataItem = dataColection;
-
-let cardItem = '';
-let clearItem = '';
-
 const objlist = document.getElementById('objlist');
-dataItem.forEach((data) => {
-  console.log(data)
-  console.log(data.inputCurrency)
-  cardItem
+
+function showData() {
+  const dataItem = dataColection;
+
+  let cardItem = '';
+  const clearItem = '';
+
+  dataItem.forEach((data) => {
+    console.log(data);
+    console.log(data.inputCurrency);
+    cardItem
   += `
 
   <div style="border:2px solid #ccc;width: 300px">
   <p>${data.type}</p>
   <p>${data.date} </p>
-  <p>${data.summa }<span> ${data.currency}</span></p>
-  <a href="${data.id}">Перейти</a>
+  <p>${data.summa}<span> ${data.currency}</span></p>
+  <button class="deleteObj" id = "${data.timeStamp}"
+        type="button">
+    Delete
+</button>
   </div>
 
   `;
-});
-objlist.innerHTML = '';
-objlist.insertAdjacentHTML('afterbegin', cardItem)
+  });
+  objlist.innerHTML = '';
+  objlist.insertAdjacentHTML('afterbegin', cardItem);
 }
 
 function click(e) {
@@ -60,7 +65,15 @@ function click(e) {
   inputType = inputForm.elements.expence.value;
   addDataObj();
   console.log(dataColection);
-  showData()
+  showData();
+}
+
+function deleteDataObj(e) {
+  console.log(e.target.id)
+  let timeStamp = e.target.id;
+  dataColection = dataColection.filter((obj) => !(obj.timeStamp == timeStamp));
+  showData();
 }
 
 inputForm.addEventListener('submit', click);
+objlist.addEventListener('click', deleteDataObj)
