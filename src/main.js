@@ -28,30 +28,29 @@ function buildGraph() {
 
 const objlist = document.getElementById('objlist');
 
-function showData() {
-  const dataItem = dataColection;
+function insertData() {
+  const dataItem = dataColection[dataColection.length-1];
 
   let cardItem = '';
   const clearItem = '';
 
-  dataItem.forEach((data) => {
-    cardItem
+  cardItem
   += `
 
   <div style="border:2px solid #ccc;width: 300px">
-  <p>${data.type}</p>
-  <p>${data.date} </p>
-  <p>${data.summa}<span> ${data.currency}</span></p>
-  <button class="deleteObj" id = "${data.timeStamp}"
+  <p>${dataItem.type}</p>
+  <p>${dataItem.date} </p>
+  <p>${dataItem.summa}<span> ${dataItem.currency}</span></p>
+  <button class="deleteObj" id = "${dataItem.timeStamp}"
         type="button">
     Delete
 </button>
   </div>
 
   `;
-  });
-  objlist.innerHTML = '';
-  objlist.insertAdjacentHTML('afterbegin', cardItem);
+  objlist.insertAdjacentHTML('beforeend', cardItem);
+  const button = document.getElementById(`${dataItem.timeStamp}`)
+  button.addEventListener('click', deleteDataObj);
 }
 
 function click(e) {
@@ -61,14 +60,15 @@ function click(e) {
   inputDate = new Date(inputForm.elements.spentDate.value);
   inputType = inputForm.elements.expence.value;
   addDataObj();
-  showData();
+  insertData();
 }
 
 function deleteDataObj(e) {
   const timeStamp = e.target.id;
-  dataColection = dataColection.filter((obj) => !(obj.timeStamp == timeStamp));
-  showData();
+  const button = document.getElementById(`${timeStamp}`);
+  button.removeEventListener('click', deleteDataObj);
+  button.parentNode.remove();
 }
 
 inputForm.addEventListener('submit', click);
-objlist.addEventListener('click', deleteDataObj);
+
