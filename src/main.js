@@ -1,6 +1,5 @@
-/* import * as d3 from 'd3';
+import './style.css';
 
-console.log(d3); */
 class DataObj {
   constructor(summa, currency, date, type) {
     this.currency = currency;
@@ -66,10 +65,10 @@ function click(e) {
 }
 
 function deleteDataObj(e) {
-  let timeStamp = e.target.id;
+  const timeStamp = e.target.id;
   dataColection = dataColection.filter((obj) => !(obj.timeStamp == timeStamp));
   showData();
 }
 
 inputForm.addEventListener('submit', click);
-objlist.addEventListener('click', deleteDataObj)
+objlist.addEventListener('click', deleteDataObj);

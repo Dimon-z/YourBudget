@@ -1,0 +1,128 @@
+/* roboto-regular - latin */
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+         url('./fonts/roboto-v29-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+         url('./fonts/roboto-v29-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+  /* roboto-500 - latin */
+  @font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    src: local(''),
+         url('./fonts/roboto-v29-latin-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+         url('./fonts/roboto-v29-latin-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+  /* roboto-700 - latin */
+  @font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    src: local(''),
+         url('./fonts/roboto-v29-latin-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+         url('./fonts/roboto-v29-latin-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+  /* roboto-900 - latin */
+  @font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 900;
+    src: local(''),
+         url('./fonts/roboto-v29-latin-900.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+         url('./fonts/roboto-v29-latin-900.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+html{
+box-sizing: border-box;
+}
+*, *::before, *::after{
+  box-sizing: inherit;
+}
+
+body {
+font-family: 'Roboto';
+font-style: normal;
+font-size: 20px;
+line-height: 1.2;
+font-weight: normal;
+color: black;
+}
+
+.header {
+background-color: rgb(204, 182, 182);
+}
+.header__wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.header__menu {
+background-color: rgb(230, 184, 184);
+}
+
+.header__nav{
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 20px;
+}
+.header__item{ 
+  margin-left: 20px;
+}
+.header__user-menu{
+  background-color: antiquewhite;
+  display: flex;
+  flex-wrap: wrap;
+}
+.usermenu__nav{
+  list-style-type: none;
+  margin-right: 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.usermenu__item{
+  margin-right: 5px;
+}
+.header__avatar{
+  margin-right: 0px;
+}
+
+/*Header-styles end */
+
+/*main styles start*/
+.main{
+  display: flex;
+  flex-wrap: wrap;
+}
+.formfield {
+  background-color: bisque;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  max-width: 400px;
+  padding: 10px;
+}
+.form1{
+  display: grid;
+  grid-template-columns: 180px 200px;
+}
+.legend{
+  padding-top: 1px;
+}
+.diagramm__field{
+  min-width: 400px;
+  min-height: 400px;
+}
+.dataobj__list{
+  background-color: aliceblue;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 600px;
+}
+/*main styles end*/
