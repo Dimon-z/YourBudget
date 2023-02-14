@@ -1,5 +1,6 @@
 import './style.css';
 
+
 class DataObj {
   constructor(summa, currency, date, type) {
     this.currency = currency;
