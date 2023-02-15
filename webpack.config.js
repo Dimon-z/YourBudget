@@ -10,7 +10,7 @@ module.exports = {
     static: [
       {
         directory: path.join(__dirname, 'assets'),
-        publicPath: '/assets'
+        publicPath: '/assets',
       },
     ],
   },
