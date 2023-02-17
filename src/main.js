@@ -44,13 +44,22 @@ console.log(selectArr) */
 function addDataObj() {
   dataColection.push(new DataObj(inputSummma, inputCurrency, inputDate, inputType));
 }
-const expencesSummArr = [];
-const expencesTypeArr = [];
+let expencesSummArr = [];
+let expencesTypeArr = [];
 
 function getChartDataFromDataCollection(dataColection) {
 // функция должна принимать массив обьктов
 // выводить массив из двух массивов, один с названиями расходов, второй с суммой,
 // порядок данных этих массивов должен совпадать.
+let DataMap = new Map();
+dataColection.forEach(element => {
+if (DataMap.has(element.type)) {
+  DataMap.set(element.type,(+DataMap.get(element.type) + +element.summa))
+} else {
+DataMap.set(element.type, +element.summa)
+}
+});
+return DataMap;
 }
 
 function divideByTime(start, end, dataColection) {
@@ -63,40 +72,52 @@ function divideByTime(start, end, dataColection) {
    for (let i = 0; i < dataColection.length; i++) {
     switch (dataColection[i].type) {
       case 'food':
-        var food = +food + +dataColection[i].summa;
+        var food = 0;
+        food = food + +dataColection[i].summa;
         break;
       case 'health':
-        var health = +health + +dataColection[i].summa;
+        var health = 0;
+        health = health + +dataColection[i].summa;
         break;
       case 'hobby':
-        var hobby = +hobby + +dataColection[i].summa;
+        var hobby = 0;
+        hobby = hobby + +dataColection[i].summa;
         break;
       case 'work':
-        var work = +work + +dataColection[i].summa;
+        var work = 0;
+        work = work + +dataColection[i].summa;
         break;
       case 'learning':
-        var learning = +learning + +dataColection[i].summa;
+        var learning = 0;
+        learning = learning + +dataColection[i].summa;
         break;
       case 'house':
-        var house = +house + +dataColection[i].summa;
+        var house = 0;
+        house = house + +dataColection[i].summa;
         break;
       case 'logistic':
-        var logistic = +logistic + +dataColection[i].summa;
+        var logistic = 0;
+        logistic = logistic + +dataColection[i].summa;
         break;
       case 'fun':
-        var fun = +fun + +dataColection[i].summa;
+        var fun = 0;
+        fun = fun + +dataColection[i].summa;
         break;
       case 'subscr':
-        var subscr = +subscr + +dataColection[i].summa;
+        var subscr = 0;
+        subscr = subscr + +dataColection[i].summa;
         break;
       case 'travel':
-        var travel = +travel + +dataColection[i].summa;
+        var travel = 0;
+        travel = travel + +dataColection[i].summa;
         break;
       case 'taxes':
-        var taxes = +taxes + +dataColection[i].summa;
+        var taxes = 0;
+        taxes = taxes + +dataColection[i].summa;
         break;
       case 'other':
-        var other = +other + +dataColection[i].summa;
+        var other = 0;
+        other = other + +dataColection[i].summa;
         break;
       default: throw new Error('guf RIP');
     }
@@ -112,16 +133,12 @@ function divideByTime(start, end, dataColection) {
 const pieChartContext = document
   .getElementById('diagramm__field')
   .getContext('2d');
-  // Creating a new chart instance
 const myPieChart = new Chart(pieChartContext, {
-  // Chart configuration
   type: 'pie',
   data: {
-    // Chart Label Vertical
     labels: expencesTypeArr,
     datasets: [
       {
-        // Chart data
         data: expencesSummArr,
         label: 'Expence type',
         borderWidth: 0.3,
@@ -142,12 +159,14 @@ const myPieChart = new Chart(pieChartContext, {
 
 const objlist = document.getElementById('objlist');
 function renewChart() {
-  getdataFromdataObj();
-  myPieChart.data.labels = expencesTypeArr[0] ? expencesTypeArr : ['ff'];
+  let data = getChartDataFromDataCollection(dataColection);
+  expencesTypeArr = Array.from(data.keys())
+  expencesSummArr = Array.from(data.values())
+  myPieChart.data.labels = expencesTypeArr[0] ? expencesTypeArr : ['NoData'];
   myPieChart.data.datasets = [
     {
       // Chart data
-      data: expencesSummArr[0] ? expencesSummArr : ['gg'],
+      data: expencesSummArr[0] ? expencesSummArr : ['1'],
       label: 'Expence type',
       borderWidth: 0.3,
       borderColor: 'black',
