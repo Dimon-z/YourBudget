@@ -1,9 +1,22 @@
-/* eslint-disable linebreak-style */
 import './style.css';
+import './reset.css'
 import Chart from 'chart.js/auto';
-
+let currencyObjPromise = require( `./script.js`)
+/* require.context('../assets/svg/', false, /\.*\.svg$/); */
 const autocolors = window['chartjs-plugin-autocolors'];
 Chart.register(autocolors);
+let dataColection = [];
+const inputForm = document.forms.inputForm1;
+let inputSummma;
+let inputCurrency;
+let inputDate;
+let inputType;
+const sendForm = document.getElementById('button1');
+const select = document.getElementById('expence');
+let expencesSummArr = [];
+let expencesTypeArr = [];
+let labelsMAp = new Map();
+
 class DataObj {
   constructor(summa, currency, date, type) {
     this.currency = currency;
@@ -23,43 +36,35 @@ timeStamp: 1676469292193
 
 type: "learning" */
 
-let dataColection = [];
-const inputForm = document.forms.inputForm1;
-let inputSummma;
-let inputCurrency;
-let inputDate;
-let inputType;
-const sendForm = document.getElementById('button1');
-const select = document.getElementById('expence');
-/* function getSelectArr(select){
-  let newarr = [];
-  for (let i = 0; i < select.options.length; i++) {
-     newarr[i] = select[i].value;
-
-  }
-  return newarr;
-}
-const selectArr = getSelectArr(select);
-console.log(selectArr) */
+async function currencyInjector() {
+  await currencyObjPromise;
+  currencyObjPromise.then((val)=>{
+    console.log(val)
+  })
+};
+currencyInjector();
 function addDataObj() {
   dataColection.push(new DataObj(inputSummma, inputCurrency, inputDate, inputType));
 }
-let expencesSummArr = [];
-let expencesTypeArr = [];
+
 
 function getChartDataFromDataCollection(dataColection) {
 // функция должна принимать массив обьктов
 // выводить массив из двух массивов, один с названиями расходов, второй с суммой,
 // порядок данных этих массивов должен совпадать.
-let DataMap = new Map();
-dataColection.forEach(element => {
-if (DataMap.has(element.type)) {
-  DataMap.set(element.type,(+DataMap.get(element.type) + +element.summa))
-} else {
-DataMap.set(element.type, +element.summa)
+  let DataMap = new Map();
+  dataColection.forEach(element => {
+   if (DataMap.has(element.type)) {
+    DataMap.set(element.type,(+DataMap.get(element.type) + +element.summa))
+    } else {
+    DataMap.set(element.type, +element.summa)
+    }
+  });
+  return DataMap;
 }
-});
-return DataMap;
+
+function labelProxy() {
+
 }
 
 function divideByTime(start, end, dataColection) {
@@ -67,69 +72,6 @@ function divideByTime(start, end, dataColection) {
 // возвращает новый массив обьектов данных который содержат все обькты за заданый промежуток времени
 }
 
-/* function getdataFromdataObj() {
-  expencesTypeArr = [...new Set(dataColection.map(((el) => el.type)))];
-   for (let i = 0; i < dataColection.length; i++) {
-    switch (dataColection[i].type) {
-      case 'food':
-        var food = 0;
-        food = food + +dataColection[i].summa;
-        break;
-      case 'health':
-        var health = 0;
-        health = health + +dataColection[i].summa;
-        break;
-      case 'hobby':
-        var hobby = 0;
-        hobby = hobby + +dataColection[i].summa;
-        break;
-      case 'work':
-        var work = 0;
-        work = work + +dataColection[i].summa;
-        break;
-      case 'learning':
-        var learning = 0;
-        learning = learning + +dataColection[i].summa;
-        break;
-      case 'house':
-        var house = 0;
-        house = house + +dataColection[i].summa;
-        break;
-      case 'logistic':
-        var logistic = 0;
-        logistic = logistic + +dataColection[i].summa;
-        break;
-      case 'fun':
-        var fun = 0;
-        fun = fun + +dataColection[i].summa;
-        break;
-      case 'subscr':
-        var subscr = 0;
-        subscr = subscr + +dataColection[i].summa;
-        break;
-      case 'travel':
-        var travel = 0;
-        travel = travel + +dataColection[i].summa;
-        break;
-      case 'taxes':
-        var taxes = 0;
-        taxes = taxes + +dataColection[i].summa;
-        break;
-      case 'other':
-        var other = 0;
-        other = other + +dataColection[i].summa;
-        break;
-      default: throw new Error('guf RIP');
-    }
-    expencesSummArr = [food, health, hobby, work, learning, house, logistic, fun, subscr, travel, taxes, other];
-    console.log(expencesSummArr)
-     expencesSummArr = dataColection.forEach((el) => {
-      if (el.type){
-        el.summa
-      }
-    });
-  }
-} */
 const pieChartContext = document
   .getElementById('diagramm__field')
   .getContext('2d');
@@ -223,3 +165,95 @@ function expenceNodeRemove(e) {
 }
 
 inputForm.addEventListener('submit', click);
+
+//-------------------конец, дальше не смотреть XD ---------------//
+
+
+
+
+/* function getdataFromdataObj() {
+  expencesTypeArr = [...new Set(dataColection.map(((el) => el.type)))];
+   for (let i = 0; i < dataColection.length; i++) {
+    switch (dataColection[i].type) {
+      case 'food':
+        var food = 0;
+        food = food + +dataColection[i].summa;
+        break;
+      case 'health':
+        var health = 0;
+        health = health + +dataColection[i].summa;
+        break;
+      case 'hobby':
+        var hobby = 0;
+        hobby = hobby + +dataColection[i].summa;
+        break;
+      case 'work':
+        var work = 0;
+        work = work + +dataColection[i].summa;
+        break;
+      case 'learning':
+        var learning = 0;
+        learning = learning + +dataColection[i].summa;
+        break;
+      case 'house':
+        var house = 0;
+        house = house + +dataColection[i].summa;
+        break;
+      case 'logistic':
+        var logistic = 0;
+        logistic = logistic + +dataColection[i].summa;
+        break;
+      case 'fun':
+        var fun = 0;
+        fun = fun + +dataColection[i].summa;
+        break;
+      case 'subscr':
+        var subscr = 0;
+        subscr = subscr + +dataColection[i].summa;
+        break;
+      case 'travel':
+        var travel = 0;
+        travel = travel + +dataColection[i].summa;
+        break;
+      case 'taxes':
+        var taxes = 0;
+        taxes = taxes + +dataColection[i].summa;
+        break;
+      case 'other':
+        var other = 0;
+        other = other + +dataColection[i].summa;
+        break;
+      default: throw new Error('guf RIP');
+    }
+    expencesSummArr = [food, health, hobby, work, learning, house, logistic, fun, subscr, travel, taxes, other];
+    console.log(expencesSummArr)
+     expencesSummArr = dataColection.forEach((el) => {
+      if (el.type){
+        el.summa
+      }
+    });
+  }
+} */
+
+function getSelectArr(select){
+  //let newarr = [];
+  for (let i = 0; i < select.options.length; i++) {
+     //newarr[i] = select[i].value;
+    labelsMAp.set(select[i].value, select[i].text)
+  }
+  //return newarr;
+}
+/* let currencyObj = {};
+const selectArr = getSelectArr(select);
+console.log(labelsMAp)
+async function getCurrData() {
+  let currencyDataResponse = await fetch(`https://www.cbr-xml-daily.ru/daily_json.js`)
+  let answer = await currencyDataResponse.json()
+  return answer.Valute;
+}
+getCurrData().then( result =>{
+  currencyObj = result;
+  console.log(currencyObj);
+}); */
+
+

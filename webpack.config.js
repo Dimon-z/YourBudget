@@ -32,12 +32,15 @@ module.exports = {
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: 'asset/resource',
+        generator: {
+          filename: path.join('assets', 'fonts/[name].[contenthash][ext]'),
+        },
       },
       {
         test: /\.svg$/,
         type: 'asset/resource',
         generator: {
-          filename: path.join('icons', '[name].[contenthash][ext]'),
+          filename: path.join('assets', '[name].[contenthash][ext]'),
         },
       },
     ],

@@ -5,9 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget tracking webApp</title>
-    <link rel="stylesheet" href="./reset.css">
-    <link rel="stylesheet" href="./style.css">
-    <script defer src="./main.js" type="module"></script>
+<!--     <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="style.css">
+    <script async src="./script.js" type="module"></script>
+    <script defer src="./main.js" type="module"></script> -->
     <script defer src="https://cdn.jsdelivr.net/npm/chartjs-plugin-autocolors"></script>
 </head>
 <body>
@@ -34,17 +35,17 @@
             <div class="header__user-menu">
                 <nav class="usermenu__nav">
                     <li class="usermenu__item">
-                        <a href="#!" class="usermenu__link"><img src="/assets/svg/flag-us.svg" alt=""></a>
+                        <a href="#!" class="usermenu__link"><img src="<%= require('../assets/svg/flag-us.svg') %>" alt=""></a>
                     </li>
                     <li class="usermenu__item">
-                        <a href="#!" class="usermenu__link"><img src="/assets/svg/settings.svg" alt=""></a>
+                        <a href="#!" class="usermenu__link"><img src="<%= require('../assets/svg/settings.svg') %>" alt=""></a>
                     </li>
                     <li class="usermenu__item">
-                        <a href="#!" class="usermenu__link"><img src="/assets/svg/user.svg" alt=""></a>
+                        <a href="#!" class="usermenu__link"><img src="<%= require('../assets/svg/user.svg') %>" alt=""></a>
                     </li>
                 </nav>
                 <div class="header__avatar">
-                    <img src="/assets/svg/user-add.svg" alt="some ebalo">
+                    <img src="<%= require('../assets/svg/user-add.svg') %>" alt="some ebalo">
                 </div>
             </div>
         </div>
@@ -55,10 +56,10 @@
                 <label for="formfield">Введите расходы</label>
                 <p class="form1">
                     <label for="count">Сумма </label>
-                    <input name="moneyCount" value="100500" type="number" min="0" step="1" required> 
+                    <input name="moneyCount" value="100500" type="number" min="0" step="1" required>
                 </p>
                 <p class="form1">
-                    <label for="currency">Валюта </label> 
+                    <label for="currency">Валюта </label>
                     <input name="spentCurrency" value="бакинских" type="text" required>
                 </p>
                 <p class="form1">
@@ -97,3 +98,5 @@
     </main>
 </body>
 </html>
+
+
