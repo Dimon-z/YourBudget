@@ -156,7 +156,7 @@ function insertData() {
 }
 //-----------функция обработчик клика кнопки формы-------------\\
 // ps проорал в голосину когда писал название XD
-function click(e) {
+function submitform(e) {
   e.preventDefault();
   inputSummma = inputForm.elements.moneyCount.value;
   inputCurrency = inputForm.elements.spentCurrency.value;
@@ -189,7 +189,7 @@ function changeBaseCurrency() {
 
 inputForm.baseCurrency.addEventListener('input',changeBaseCurrency)
 
-inputForm.addEventListener('submit', click);
+inputForm.addEventListener('submit', submitform);
 
 //-------------------конец, возвращайтесь, дальше живут драконы---------------//
 
