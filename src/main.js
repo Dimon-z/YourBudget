@@ -13,9 +13,11 @@ let inputCurrencyName;
 let inputTypeName;
 let inputDate;
 let inputType;
+let inputBaseCurrency;
 const sendForm = document.getElementById('button1');
 const selectExpence = document.getElementById('expence');
 const selectCurr = document.getElementById('spentCurrency');
+const selectBaseCurr = document.getElementById('baseCurrency');
 let expencesSummArr = [];
 let expencesTypeArr = [];
 let labelsMAp = new Map();
@@ -31,16 +33,8 @@ class DataObj {
     this.timeStamp = Date.now();
   }
 }
-/* currency: "бакинских"
 
-date: Date Fri Feb 03 2023 03:00:00 GMT+0300 (GMT+03:00)
-
-summa: "100500"
-
-timeStamp: 1676469292193
-
-type: "learning" */
-
+//--------------------вставляем валюты в селекты----------------\\
 async function currencyInjector() {
   await currencyObjPromise;
   currencyObjPromise.then((val)=>{
@@ -49,18 +43,29 @@ async function currencyInjector() {
     arr.forEach((element)=>{
         valutesArr.push([element.Name,element.CharCode, element.Value])
     })
-    console.log(valutesArr)
     valutesArr.forEach((element)=>{
       selectCurr.appendChild( new Option(element[0],element[1]))
+      selectBaseCurr.appendChild( new Option(element[0],element[1]))
     })
   })
 };
 currencyInjector();
+//-----------функция добавления обькта расходов в массив обьектов расходов------------\\
 function addDataObj() {
   dataColection.push(new DataObj(inputSummma, inputCurrency, inputDate, inputType, inputTypeName ,inputCurrencyName));
 }
+//---------------------------функция нормализации валют---------------------------\\
+/* function currencyExchanger(dataColection,base){
+  let sameCurrencyDataCollection = [];
+  dataColection.forEach((value)=>{
+    value.
+  }
+  )
 
-
+  return sameCurrencyDataCollection;
+}
+ */
+//----функция извлекает данные для графика, суммирует одинаковые категории и добавляет их мапу-----\\
 function getChartDataFromDataCollection(dataColection) {
 // функция должна принимать массив обьктов
 // выводить массив из двух массивов, один с названиями расходов, второй с суммой,
@@ -76,15 +81,12 @@ function getChartDataFromDataCollection(dataColection) {
   return DataMap;
 }
 
-function labelProxy() {
-
-}
-
+//--------функция фильтрует данные по заданным временным рамкам------\\
 function divideByTime(start, end, dataColection) {
 // функция принимает два таймстампа и массив обьктов данных,
 // возвращает новый массив обьектов данных который содержат все обькты за заданый промежуток времени
 }
-
+//------собственно наш график-------\\
 const pieChartContext = document
   .getElementById('diagramm__field')
   .getContext('2d');
@@ -111,7 +113,7 @@ const myPieChart = new Chart(pieChartContext, {
     },
   },
 });
-
+//--------------функция обновляет график--------------\\
 const objlist = document.getElementById('objlist');
 function renewChart() {
   let data = getChartDataFromDataCollection(dataColection);
@@ -122,14 +124,14 @@ function renewChart() {
     {
       // Chart data
       data: expencesSummArr[0] ? expencesSummArr : ['1'],
-      label: 'Expence type',
+      label: 'Expence type' /* + baseCurrency */,
       borderWidth: 0.3,
       borderColor: 'black',
     },
   ];
   myPieChart.update();
 }
-
+//----------функция выводит карточки расходов------\\
 function insertData() {
   const dataItem = dataColection[dataColection.length - 1];
 
@@ -152,7 +154,8 @@ function insertData() {
   const button = document.getElementById(`${dataItem.timeStamp}`);
   button.addEventListener('click', expenceNodeRemove);
 }
-
+//-----------функция обработчик клика кнопки формы-------------\\
+// ps проорал в голосину когда писал название XD
 function click(e) {
   e.preventDefault();
   inputSummma = inputForm.elements.moneyCount.value;
@@ -165,11 +168,11 @@ function click(e) {
   insertData();
   renewChart();
 }
-
+//-------функция удаляет данные из массива в след за удалением карточки------\\
 function deleteExpenceData(deletionOption) {
   dataColection = dataColection.filter((obj) => !(+obj.timeStamp === +deletionOption));
 }
-
+//-------функция удаляет узел с карточкой по кнопке удаления-----\\
 function expenceNodeRemove(e) {
   const timeStamp = e.target.id;
   const button = document.getElementById(`${timeStamp}`);
@@ -178,9 +181,16 @@ function expenceNodeRemove(e) {
   deleteExpenceData(timeStamp);
   renewChart();
 }
+//------функция меняет валюту графика-----\\
+function changeBaseCurrency() {
+  inputBaseCurrency = inputForm.elements.baseCurrency.value
+
+}
+
+inputForm.baseCurrency.addEventListener('input',changeBaseCurrency)
 
 inputForm.addEventListener('submit', click);
 
-//-------------------конец, дальше не смотреть XD ---------------//
+//-------------------конец, возвращайтесь, дальше живут драконы---------------//
 
 
