@@ -99,6 +99,7 @@ background-color: rgb(230, 184, 184);
 .main{
   display: flex;
   flex-wrap: wrap;
+  align-items: space-between ;
 }
 .formfield {
   background-color: bisque;
@@ -124,5 +125,9 @@ background-color: rgb(230, 184, 184);
   display: flex;
   flex-wrap: wrap;
   max-width: 600px;
+}
+.objlistLabel{
+  max-height: 50px;
+  width: 600px;
 }
 /*main styles end*/

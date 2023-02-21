@@ -60,7 +60,8 @@
                 </p>
                 <p class="form1">
                     <label for="currency">Валюта </label>
-                    <input name="spentCurrency" value="бакинских" type="text" required>
+                    <select name="currency" id="spentCurrency">
+                    </select>
                 </p>
                 <p class="form1">
                     <label for="date">Дата </label>
@@ -89,12 +90,12 @@
                 </p>
             </fieldset>
         </form>
+        <div class="dataobj__list" id="objlist">
+            <label  class="objlistLabel">Cписок расходов</label>
+        </div>
         <canvas id="diagramm__field">
             тут будет график
         </canvas>
-        <div class="dataobj__list" id="objlist">
-            список обьектов расходов
-        </div>
     </main>
 </body>
 </html>

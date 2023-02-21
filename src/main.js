@@ -9,20 +9,25 @@ let dataColection = [];
 const inputForm = document.forms.inputForm1;
 let inputSummma;
 let inputCurrency;
+let inputCurrencyName;
+let inputTypeName;
 let inputDate;
 let inputType;
 const sendForm = document.getElementById('button1');
-const select = document.getElementById('expence');
+const selectExpence = document.getElementById('expence');
+const selectCurr = document.getElementById('spentCurrency');
 let expencesSummArr = [];
 let expencesTypeArr = [];
 let labelsMAp = new Map();
 
 class DataObj {
-  constructor(summa, currency, date, type) {
+  constructor(summa, currency, date, type, typeName, currencyName) {
     this.currency = currency;
     this.date = date;
     this.summa = summa;
     this.type = type;
+    this.typeName = typeName;
+    this.currencyName = currencyName;
     this.timeStamp = Date.now();
   }
 }
@@ -39,12 +44,20 @@ type: "learning" */
 async function currencyInjector() {
   await currencyObjPromise;
   currencyObjPromise.then((val)=>{
-    console.log(val)
+    let valutesArr = [['Рубль','RUB','1']];
+    let arr = Object.values(val)
+    arr.forEach((element)=>{
+        valutesArr.push([element.Name,element.CharCode, element.Value])
+    })
+    console.log(valutesArr)
+    valutesArr.forEach((element)=>{
+      selectCurr.appendChild( new Option(element[0],element[1]))
+    })
   })
 };
 currencyInjector();
 function addDataObj() {
-  dataColection.push(new DataObj(inputSummma, inputCurrency, inputDate, inputType));
+  dataColection.push(new DataObj(inputSummma, inputCurrency, inputDate, inputType, inputTypeName ,inputCurrencyName));
 }
 
 
@@ -54,10 +67,10 @@ function getChartDataFromDataCollection(dataColection) {
 // порядок данных этих массивов должен совпадать.
   let DataMap = new Map();
   dataColection.forEach(element => {
-   if (DataMap.has(element.type)) {
-    DataMap.set(element.type,(+DataMap.get(element.type) + +element.summa))
+   if (DataMap.has(element.typeName)) {
+    DataMap.set(element.typeName,(+DataMap.get(element.typeName) + +element.summa))
     } else {
-    DataMap.set(element.type, +element.summa)
+    DataMap.set(element.typeName, +element.summa)
     }
   });
   return DataMap;
@@ -125,9 +138,9 @@ function insertData() {
   += `
 
   <div style="border:2px solid #ccc;width: 300px">
-  <p>${dataItem.type}</p>
+  <p>${dataItem.typeName}</p>
   <p>${dataItem.date} </p>
-  <p>${dataItem.summa}<span> ${dataItem.currency}</span></p>
+  <p>${dataItem.summa}<span> ${dataItem.currencyName}</span></p>
   <button class="deleteObj" id = "${dataItem.timeStamp}"
         type="button">
     Delete
@@ -144,8 +157,10 @@ function click(e) {
   e.preventDefault();
   inputSummma = inputForm.elements.moneyCount.value;
   inputCurrency = inputForm.elements.spentCurrency.value;
+  inputCurrencyName = document.forms.inputForm1.elements.spentCurrency.selectedOptions[0].text ;
   inputDate = new Date(inputForm.elements.spentDate.value);
   inputType = inputForm.elements.expence.value;
+  inputTypeName = inputForm.elements.expence.selectedOptions[0].text;
   addDataObj();
   insertData();
   renewChart();
@@ -167,93 +182,5 @@ function expenceNodeRemove(e) {
 inputForm.addEventListener('submit', click);
 
 //-------------------конец, дальше не смотреть XD ---------------//
-
-
-
-
-/* function getdataFromdataObj() {
-  expencesTypeArr = [...new Set(dataColection.map(((el) => el.type)))];
-   for (let i = 0; i < dataColection.length; i++) {
-    switch (dataColection[i].type) {
-      case 'food':
-        var food = 0;
-        food = food + +dataColection[i].summa;
-        break;
-      case 'health':
-        var health = 0;
-        health = health + +dataColection[i].summa;
-        break;
-      case 'hobby':
-        var hobby = 0;
-        hobby = hobby + +dataColection[i].summa;
-        break;
-      case 'work':
-        var work = 0;
-        work = work + +dataColection[i].summa;
-        break;
-      case 'learning':
-        var learning = 0;
-        learning = learning + +dataColection[i].summa;
-        break;
-      case 'house':
-        var house = 0;
-        house = house + +dataColection[i].summa;
-        break;
-      case 'logistic':
-        var logistic = 0;
-        logistic = logistic + +dataColection[i].summa;
-        break;
-      case 'fun':
-        var fun = 0;
-        fun = fun + +dataColection[i].summa;
-        break;
-      case 'subscr':
-        var subscr = 0;
-        subscr = subscr + +dataColection[i].summa;
-        break;
-      case 'travel':
-        var travel = 0;
-        travel = travel + +dataColection[i].summa;
-        break;
-      case 'taxes':
-        var taxes = 0;
-        taxes = taxes + +dataColection[i].summa;
-        break;
-      case 'other':
-        var other = 0;
-        other = other + +dataColection[i].summa;
-        break;
-      default: throw new Error('guf RIP');
-    }
-    expencesSummArr = [food, health, hobby, work, learning, house, logistic, fun, subscr, travel, taxes, other];
-    console.log(expencesSummArr)
-     expencesSummArr = dataColection.forEach((el) => {
-      if (el.type){
-        el.summa
-      }
-    });
-  }
-} */
-
-function getSelectArr(select){
-  //let newarr = [];
-  for (let i = 0; i < select.options.length; i++) {
-     //newarr[i] = select[i].value;
-    labelsMAp.set(select[i].value, select[i].text)
-  }
-  //return newarr;
-}
-/* let currencyObj = {};
-const selectArr = getSelectArr(select);
-console.log(labelsMAp)
-async function getCurrData() {
-  let currencyDataResponse = await fetch(`https://www.cbr-xml-daily.ru/daily_json.js`)
-  let answer = await currencyDataResponse.json()
-  return answer.Valute;
-}
-getCurrData().then( result =>{
-  currencyObj = result;
-  console.log(currencyObj);
-}); */
 
 
