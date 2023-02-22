@@ -14,6 +14,7 @@ let inputTypeName;
 let inputDate;
 let inputType;
 let inputBaseCurrency;
+let baseCurrencyName;
 const sendForm = document.getElementById('button1');
 const selectExpence = document.getElementById('expence');
 const selectCurr = document.getElementById('spentCurrency');
@@ -35,10 +36,10 @@ class DataObj {
 }
 
 //--------------------вставляем валюты в селекты----------------\\
+let valutesArr = [['Рубль','RUB','1']];
 async function currencyInjector() {
   await currencyObjPromise;
   currencyObjPromise.then((val)=>{
-    let valutesArr = [['Рубль','RUB','1']];
     let arr = Object.values(val)
     arr.forEach((element)=>{
         valutesArr.push([element.Name,element.CharCode, element.Value])
@@ -55,16 +56,30 @@ function addDataObj() {
   dataColection.push(new DataObj(inputSummma, inputCurrency, inputDate, inputType, inputTypeName ,inputCurrencyName));
 }
 //---------------------------функция нормализации валют---------------------------\\
-/* function currencyExchanger(dataColection,base){
+function currencyExchanger(dataColection,baseCurrency){
   let sameCurrencyDataCollection = [];
   dataColection.forEach((value)=>{
-    value.
+    if (value.currency === baseCurrency) {
+      sameCurrencyDataCollection.push(value)
+    } else {
+      value.summa = exchange(value.summa,value.currency,baseCurrency)
+      value.currency = baseCurrency;
+      value.currencyName = baseCurrencyName;
+      sameCurrencyDataCollection.push(value)
+    }
   }
   )
-
   return sameCurrencyDataCollection;
 }
- */
+
+//-----------функция обмена валюты---------\\
+function exchange(summa,currency,baseCurrency) {
+  let bot = valutesArr.find((element)=>element[1] == baseCurrency);
+  let top = valutesArr.find((element)=>element[1] == currency);
+  let curs = top[2]/bot[2]; //[2] === currency.value
+  let exchangedSumma = summa*curs
+  return exchangedSumma;
+}
 //----функция извлекает данные для графика, суммирует одинаковые категории и добавляет их мапу-----\\
 function getChartDataFromDataCollection(dataColection) {
 // функция должна принимать массив обьктов
@@ -83,8 +98,14 @@ function getChartDataFromDataCollection(dataColection) {
 
 //--------функция фильтрует данные по заданным временным рамкам------\\
 function divideByTime(start, end, dataColection) {
-// функция принимает два таймстампа и массив обьктов данных,
-// возвращает новый массив обьектов данных который содержат все обькты за заданый промежуток времени
+  let timeFilteredDC = [];
+   timeFilteredDC = dataColection.filter((element)=>{
+    if (element.timeStamp>= start && element.timeStamp <= end){
+      return true;
+    }
+    return false;
+  })
+  return timeFilteredDC;
 }
 //------собственно наш график-------\\
 const pieChartContext = document
@@ -115,7 +136,7 @@ const myPieChart = new Chart(pieChartContext, {
 });
 //--------------функция обновляет график--------------\\
 const objlist = document.getElementById('objlist');
-function renewChart() {
+function renewChart(dataColection) {
   let data = getChartDataFromDataCollection(dataColection);
   expencesTypeArr = Array.from(data.keys())
   expencesSummArr = Array.from(data.values())
@@ -123,8 +144,8 @@ function renewChart() {
   myPieChart.data.datasets = [
     {
       // Chart data
-      data: expencesSummArr[0] ? expencesSummArr : ['1'],
-      label: 'Expence type' /* + baseCurrency */,
+      data: expencesSummArr[0] ? expencesSummArr : ['0'],
+      label: `Категория расходов, ${baseCurrencyName }`,
       borderWidth: 0.3,
       borderColor: 'black',
     },
@@ -132,7 +153,7 @@ function renewChart() {
   myPieChart.update();
 }
 //----------функция выводит карточки расходов------\\
-function insertData() {
+function insertData(dataColection) {
   const dataItem = dataColection[dataColection.length - 1];
 
   let cardItem = '';
@@ -165,8 +186,8 @@ function submitform(e) {
   inputType = inputForm.elements.expence.value;
   inputTypeName = inputForm.elements.expence.selectedOptions[0].text;
   addDataObj();
-  insertData();
-  renewChart();
+  insertData(dataColection);
+  renewChart(dataColection);
 }
 //-------функция удаляет данные из массива в след за удалением карточки------\\
 function deleteExpenceData(deletionOption) {
@@ -179,12 +200,14 @@ function expenceNodeRemove(e) {
   button.removeEventListener('click', expenceNodeRemove);
   button.parentNode.remove();
   deleteExpenceData(timeStamp);
-  renewChart();
+  renewChart(dataColection);
 }
 //------функция меняет валюту графика-----\\
 function changeBaseCurrency() {
-  inputBaseCurrency = inputForm.elements.baseCurrency.value
-
+  inputBaseCurrency = inputForm.elements.baseCurrency.value;
+  baseCurrencyName = inputForm.elements.baseCurrency.selectedOptions[0].text;
+  let chartdata = currencyExchanger(dataColection,inputBaseCurrency);
+  renewChart(chartdata);
 }
 
 inputForm.baseCurrency.addEventListener('input',changeBaseCurrency)
