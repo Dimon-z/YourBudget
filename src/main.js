@@ -1,4 +1,4 @@
-// eslint-disable-next-line linebreak-style
+/* eslint-disable linebreak-style */
 import './style.css';
 import './reset.css';
 import Chart from 'chart.js/auto';
@@ -23,7 +23,6 @@ const selectCurr = document.getElementById('spentCurrency');
 const selectBaseCurr = document.getElementById('baseCurrency');
 let expencesSummArr = [];
 let expencesTypeArr = [];
-const labelsMAp = new Map();
 
 class DataObj {
   constructor(summa, currency, date, type, typeName, currencyName) {
@@ -81,7 +80,7 @@ function exchange(summa, currency, baseCurrency) {
   const exchangedSumma = summa * curs;
   return exchangedSumma;
 }
-// ----функция извлекает данные для графика, суммирует одинаковые категории и добавляет их мапу-----\\
+// ----функция извлекает данные для графика, суммирует одинаковые категории и добавляет их мапу---\\
 function getChartDataFromDataCollection(dataColection) {
 // функция должна принимать массив обьктов
 // выводить массив из двух массивов, один с названиями расходов, второй с суммой,
@@ -188,6 +187,7 @@ function submitform(e) {
   inputTypeName = inputForm.elements.expence.selectedOptions[0].text;
   addDataObj();
   insertData(dataColection);
+  changeBaseCurrency();
   renewChart(dataColection);
 }
 // -------функция удаляет данные из массива в след за удалением карточки------\\
