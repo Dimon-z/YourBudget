@@ -129,5 +129,7 @@ background-color: rgb(230, 184, 184);
 .objlistLabel{
   max-height: 50px;
   width: 600px;
+  justify-self: center;
+  text-align: center;
 }
 /*main styles end*/

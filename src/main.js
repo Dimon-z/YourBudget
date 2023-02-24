@@ -1,7 +1,7 @@
 import './style.css';
 import './reset.css'
 import Chart from 'chart.js/auto';
-let currencyObjPromise = require( `./script.js`)
+let currencyObjPromise = require( `./request.js`)
 /* require.context('../assets/svg/', false, /\.*\.svg$/); */
 const autocolors = window['chartjs-plugin-autocolors'];
 Chart.register(autocolors);
@@ -145,7 +145,7 @@ function renewChart(dataColection) {
     {
       // Chart data
       data: expencesSummArr[0] ? expencesSummArr : ['0'],
-      label: `Категория расходов, ${baseCurrencyName }`,
+      label: `Категория расходов, ${baseCurrencyName ? baseCurrencyName : '' }`,
       borderWidth: 0.3,
       borderColor: 'black',
     },
